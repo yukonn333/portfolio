@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Portfolio-Caiodev</title>
+</head>
+
+<body>
+    <div class="particulas"></div>
+
+
+    <nav class="navegacao">
+        <ul class="menu">
+            <li>
+                <a href="#inicio" class="menu-link">inicio</a>
+            </li>
+            <li>
+                <a href="#sobre" class="menu-link">Sobre</a>
+            </li>
+            <li>
+                <a href="#projetos" class="menu-link">Projetos</a>
+            </li>
+            <li>
+                <a href="#contatos" class="menu-link">Contato</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main id="inicio" class="cabecalho">
+        <div>
+            <img src="img/profile-pic.png" alt="Foto de caio amorim" class="foto-perfil">
+            <h1>Caio Amorim</h1>
+            <p class="cabecalho-sub-titulo">Desenvolvedor Front-End</p>
+        </div>
+    </main>
+
+    <section id="sobre" class="sobre">
+        <h2 class="sobre-titulo">sobre mim</h2>
+        <div class="sobre-caixa">
+            <p class="sobre-paragrafo">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam iusto quaerat,
+                autem facere eveniet,
+                repellendus fugit quod saepe nisi ad. Inventore nemo rem in iure veritatis totam odit?</p>
+        </div>
+    </section>
+
+    <section id="projetos" class="projetos">
+  <h2 class="projetos-titulo">Meus Projetos</h2>
+
+  <div class="projetos-caixa">
+
+    <div class="projetos-card">
+      <img src="img/foto1portf.png" alt="projeto 1" class="projetos-imagem">
+      <div class="caixa-texto-projetos">
+        <h3 class="projetos-titulo-card">Projeto 1</h3>
+        <p class="paragrafo-projeto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </p>
+      </div>
+    </div>
+
+    <div class="projetos-card">
+      <img src="img/foto2portf.png" alt="projeto 2" class="projetos-imagem">
+      <div class="caixa-texto-projetos">
+        <h3 class="projetos-titulo-card">Projeto 2</h3>
+        <p class="paragrafo-projeto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </p>
+      </div>
+    </div>
+
+    <div class="projetos-card">
+      <img src="img/foto3portf.png" alt="projeto 3" class="projetos-imagem">
+      <div class="caixa-texto-projetos">
+        <h3 class="projetos-titulo-card">Projeto 3</h3>
+        <p class="paragrafo-projeto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+    <section id="contatos" class="contatos">
+
+        <h2 class="contatos-titulos">Entre em contato</h2>
+
+        <form class="formulario-contato" id="formulario" onsubmit="enviarMensagem(event)">
+
+            <div class="grupo-form">
+                <input placeholder="Nome" class="campo-form" id="nome">
+            </div>
+
+            <div class="grupo-form">
+                <textarea class="campo-form" placeholder="Digite sua mensagem" rows="4" id="mensagem"></textarea>
+            </div>
+
+            <button type="submit" class="botao-form">Enviar para o Watsapp</button>
+            <p id="feedback-form" class="feedback-form"></p>
+
+        </form>
+
+    </section>
+
+    <script>
+document.getElementById('formulario').addEventListener('submit', enviarMensagem);
+
+let feedbackTimeout; // controla o tempo do alerta
+
+function mostrarFeedback(texto, tipo, duracao = 3000) {
+    const feedback = document.getElementById('feedback-form');
+
+    clearTimeout(feedbackTimeout);
+
+    feedback.textContent = texto;
+    feedback.className = `feedback-form show ${tipo}`;
+
+    feedbackTimeout = setTimeout(() => {
+        feedback.className = 'feedback-form';
+        feedback.textContent = '';
+    }, duracao);
+}
+
+function enviarMensagem(event) {
+    event.preventDefault();
+
+    const nomeInput = document.getElementById('nome');
+    const mensagemInput = document.getElementById('mensagem');
+    const botao = document.querySelector('.botao-form');
+
+    const nome = nomeInput.value.trim();
+    const mensagem = mensagemInput.value.trim();
+
+    if (nome === '' || mensagem === '') {
+        mostrarFeedback(
+            'Por favor, preencha seu nome e a mensagem.',
+            'erro',
+            3000
+        );
+        return;
+    }
+
+    botao.disabled = true;
+    mostrarFeedback('Abrindo WhatsApp...', 'loading', 2000);
+
+    const telefone = '5581987310809';
+    const texto = `Olá, meu nome é ${nome}. ${mensagem}`;
+    const msgFormatada = encodeURIComponent(texto);
+
+    const url = `https://wa.me/${telefone}?text=${msgFormatada}`;
+
+    window.open(url, '_blank');
+
+    // Limpa formulário
+    nomeInput.value = '';
+    mensagemInput.value = '';
+
+    setTimeout(() => {
+        botao.disabled = false;
+    }, 2000);
+}
+</script>
+
+
+
+
+</body>
+
+</html>
